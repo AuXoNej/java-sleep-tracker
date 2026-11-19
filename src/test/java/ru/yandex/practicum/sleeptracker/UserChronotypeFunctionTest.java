@@ -1,7 +1,7 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyzeFunctions.UserChronotype;
+import ru.yandex.practicum.sleeptracker.analyze.function.UserChronotypeFunction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class UserChronotypeTest {
+class UserChronotypeFunctionTest {
 
-    private final UserChronotype chronotype = new UserChronotype();
+    private final UserChronotypeFunction chronotype = new UserChronotypeFunction();
 
 
     // ========== Чистые хронотипы ==========

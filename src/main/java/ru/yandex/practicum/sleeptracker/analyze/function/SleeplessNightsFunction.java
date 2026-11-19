@@ -1,22 +1,22 @@
-package ru.yandex.practicum.sleeptracker.analyzeFunctions;
+package ru.yandex.practicum.sleeptracker.analyze.function;
 
 import ru.yandex.practicum.sleeptracker.Pair;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
+import ru.yandex.practicum.sleeptracker.analyze.SleeplessNights;
 
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.LongStream;
 
 import static ru.yandex.practicum.sleeptracker.Constants.*;
 
-public class SleeplessNights {
+public class SleeplessNightsFunction implements SleeplessNights {
 
-    public Long countSleeplessNights(
-        List<SleepingSession> sessions,
-        LocalDateTime startPeriod,
-        LocalDateTime endPeriod
-    ) {
+    @Override
+    public Long countSleeplessNights(List<SleepingSession> sessions) {
+
+        var startPeriod = sessions.getFirst().getStartSleeping();
+        var endPeriod = sessions.getLast().getEndSleeping();
 
         var start = startPeriod.getHour() <= HOUR_START_DAY
             ? startPeriod.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC)
@@ -24,7 +24,7 @@ public class SleeplessNights {
         var end = endPeriod.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC) + NIGHT_DURATION_SECONDS;
 
         List<Pair<Long, Long>> sleeplessNights = LongStream.range(
-            0, Math.ceilDiv(end - start, DAY_DURATION_SECONDS))
+                0, Math.ceilDiv(end - start, DAY_DURATION_SECONDS))
             .mapToObj(i -> {
                 long nightStart = start + i * DAY_DURATION_SECONDS;
                 return new Pair<>(nightStart, nightStart + NIGHT_DURATION_SECONDS);
@@ -43,7 +43,7 @@ public class SleeplessNights {
                 .noneMatch(
                     session ->
                         night.getLeft() < session.getRight()
-                        && session.getLeft() < night.getRight()
+                            && session.getLeft() < night.getRight()
                 )
             )
             .count();

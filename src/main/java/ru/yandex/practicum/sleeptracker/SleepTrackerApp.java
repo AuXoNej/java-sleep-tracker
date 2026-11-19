@@ -1,8 +1,23 @@
 package ru.yandex.practicum.sleeptracker;
 
+import ru.yandex.practicum.sleeptracker.analyze.function.*;
+
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class SleepTrackerApp {
+
+    private static final List<Function<List<SleepingSession>, AnalysisResult>> ANALYSIS_FUNCTIONS = List.of(
+        new CountSleepingSessionsFunction(),
+        new MinDurationSleepFunction(),
+        new MaxDurationSleepFunction(),
+        new AverageDurationSleepFunction(),
+        new CountBadQualitySleepSessionsFunction(),
+        new SleeplessNightsFunction(),
+        new UserChronotypeFunction()
+    );
+
 
     public static void main(String[] args) {
 
@@ -16,13 +31,12 @@ public class SleepTrackerApp {
 
         var sleepingSessions = SleepLogLoader.loadSleepingSessions(path);
 
-        SleepingAnalyze sleepingAnalyze = new SleepingAnalyze(sleepingSessions);
+        if (sleepingSessions.isEmpty()) {
+            throw new RuntimeException("Список сессий сна пуст");
+        }
 
-        sleepingAnalyze.getFunctions().forEach(
-            f -> {
-                System.out.print(f.getRight());
-                System.out.println(f.getLeft().get());
-            }
+        ANALYSIS_FUNCTIONS.forEach(function ->
+            System.out.println(function.apply(sleepingSessions))
         );
     }
 }

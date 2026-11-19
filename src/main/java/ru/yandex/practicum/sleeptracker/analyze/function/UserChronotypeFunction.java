@@ -1,7 +1,8 @@
-package ru.yandex.practicum.sleeptracker.analyzeFunctions;
+package ru.yandex.practicum.sleeptracker.analyze.function;
 
 import ru.yandex.practicum.sleeptracker.Pair;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
+import ru.yandex.practicum.sleeptracker.analyze.UserChronotype;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +10,9 @@ import java.util.Map;
 
 import static ru.yandex.practicum.sleeptracker.Constants.*;
 
-public class UserChronotype {
+public class UserChronotypeFunction implements UserChronotype {
 
+    @Override
     public String getUserChronotype(List<SleepingSession> sessions) {
 
         var chronotypes = new HashMap<String, Integer>();

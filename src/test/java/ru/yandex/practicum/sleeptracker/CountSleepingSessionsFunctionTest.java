@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyzeFunctions.CountSleepingSessions;
+import ru.yandex.practicum.sleeptracker.analyze.function.CountSleepingSessionsFunction;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CountSleepingSessionsTest {
+class CountSleepingSessionsFunctionTest {
 
-    private final CountSleepingSessions analyzeFunc = new CountSleepingSessions();
+    private final CountSleepingSessionsFunction analyzeFunc = new CountSleepingSessionsFunction();
 
     @Test
     void singleSession_returnsOne() {
