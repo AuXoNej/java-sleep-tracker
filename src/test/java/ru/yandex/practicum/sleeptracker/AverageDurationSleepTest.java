@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.AverageDurationSleepFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.AverageDurationSleep;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AverageDurationSleepFunctionTest {
+class AverageDurationSleepTest {
 
-    private final AverageDurationSleepFunction metrics = new AverageDurationSleepFunction();
+    private final AverageDurationSleep metrics = new AverageDurationSleep();
 
 
     @Test
@@ -23,9 +23,9 @@ class AverageDurationSleepFunctionTest {
                 new SleepingSession(start, end, QualitySleep.GOOD)
         );
 
-        var result = metrics.getAverageDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(8 * 60, result);
+        assertEquals(8 * 60L, result);
     }
 
     @Test
@@ -50,9 +50,9 @@ class AverageDurationSleepFunctionTest {
         );
 
         // 480 + 120 + 480 = 1080 / 3 = 360
-        var result = metrics.getAverageDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(360, result);
+        assertEquals(360L, result);
     }
 
     @Test
@@ -71,8 +71,8 @@ class AverageDurationSleepFunctionTest {
             )
         );
 
-        var result = metrics.getAverageDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(8 * 60, result);
+        assertEquals(8 * 60L, result);
     }
 }

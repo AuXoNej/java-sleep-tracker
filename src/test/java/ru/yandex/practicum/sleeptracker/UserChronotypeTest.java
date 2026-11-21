@@ -1,7 +1,7 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.UserChronotypeFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.UserChronotype;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class UserChronotypeFunctionTest {
+class UserChronotypeTest {
 
-    private final UserChronotypeFunction chronotype = new UserChronotypeFunction();
+    private final UserChronotype chronotype = new UserChronotype();
 
 
     // ========== Чистые хронотипы ==========
@@ -36,7 +36,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Сова", chronotype.getUserChronotype(sessions));
+        assertEquals("Сова", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -60,7 +60,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Жаворонок", chronotype.getUserChronotype(sessions));
+        assertEquals("Жаворонок", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -84,7 +84,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
 
@@ -110,7 +110,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Жаворонок", chronotype.getUserChronotype(sessions));
+        assertEquals("Жаворонок", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -134,7 +134,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Сова", chronotype.getUserChronotype(sessions));
+        assertEquals("Сова", chronotype.apply(sessions).value());
     }
 
 
@@ -155,7 +155,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -174,7 +174,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -193,7 +193,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -216,7 +216,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
 
@@ -226,7 +226,7 @@ class UserChronotypeFunctionTest {
 
         List<SleepingSession> sessions = List.of();
 
-        assertEquals("Голубь", chronotype.getUserChronotype(sessions));
+        assertEquals("Голубь", chronotype.apply(sessions).value());
     }
 
 
@@ -246,7 +246,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertNotEquals("Сова", chronotype.getUserChronotype(sessions));
+        assertNotEquals("Сова", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -265,7 +265,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertNotEquals("Сова", chronotype.getUserChronotype(sessions));
+        assertNotEquals("Сова", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -284,7 +284,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertNotEquals("Жаворонок", chronotype.getUserChronotype(sessions));
+        assertNotEquals("Жаворонок", chronotype.apply(sessions).value());
     }
 
     @Test
@@ -303,7 +303,7 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertNotEquals("Жаворонок", chronotype.getUserChronotype(sessions));
+        assertNotEquals("Жаворонок", chronotype.apply(sessions).value());
     }
 
 
@@ -344,6 +344,6 @@ class UserChronotypeFunctionTest {
             )
         );
 
-        assertEquals("Сова", chronotype.getUserChronotype(sessions));
+        assertEquals("Сова", chronotype.apply(sessions).value());
     }
 }

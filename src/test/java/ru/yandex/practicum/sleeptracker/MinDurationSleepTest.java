@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.MinDurationSleepFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.MinDurationSleep;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MinDurationSleepFunctionTest {
+class MinDurationSleepTest {
 
-    private final MinDurationSleepFunction metrics = new MinDurationSleepFunction();
+    private final MinDurationSleep metrics = new MinDurationSleep();
 
 
     @Test
@@ -23,10 +23,9 @@ class MinDurationSleepFunctionTest {
             new SleepingSession(start, end, QualitySleep.GOOD)
         );
 
-        var result = metrics.getMinDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(8 * 60, result.getRight());
-        assertEquals(List.of(start, end), result.getLeft());
+        assertEquals(8 * 60L, result);
     }
 
     @Test
@@ -51,9 +50,8 @@ class MinDurationSleepFunctionTest {
             )
         );
 
-        var result = metrics.getMinDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(2 * 60, result.getRight());
-        assertEquals(List.of(start, end), result.getLeft());
+        assertEquals(2 * 60L, result);
     }
 }

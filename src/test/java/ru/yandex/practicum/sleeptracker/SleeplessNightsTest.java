@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.SleeplessNightsFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.SleeplessNights;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SleeplessNightsFunctionTest {
+class SleeplessNightsTest {
 
-    private final SleeplessNightsFunction analyzeFunc = new SleeplessNightsFunction();
+    private final SleeplessNights analyzeFunc = new SleeplessNights();
 
 
     @Test
@@ -25,7 +25,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(0, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(0L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -39,7 +39,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(0, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(0L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -53,7 +53,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(1, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(1L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -75,7 +75,7 @@ class SleeplessNightsFunctionTest {
         // Ночь 1/2 — покрыта (сессия 22:00-06:00)
         // Ночь 2/3 — бессонная
         // Ночь 3/4 — покрыта (сессия 23:00-05:00)
-        assertEquals(1, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(1L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -99,7 +99,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(0, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(0L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -123,7 +123,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(3, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(3L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -138,7 +138,7 @@ class SleeplessNightsFunctionTest {
         );
 
         // Сессия ровно по границе ночного интервала (00:00-06:00)
-        assertEquals(0, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(0L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -152,7 +152,7 @@ class SleeplessNightsFunctionTest {
             )
         );
 
-        assertEquals(1, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(1L, analyzeFunc.apply(sessions).value());
     }
 
     @Test
@@ -167,6 +167,6 @@ class SleeplessNightsFunctionTest {
         );
 
         // Длинная сессия перекрывает ночи 1/2, 2/3 и частично 3/4
-        assertEquals(0, analyzeFunc.countSleeplessNights(sessions));
+        assertEquals(0L, analyzeFunc.apply(sessions).value());
     }
 }

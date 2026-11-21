@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.CountBadQualitySleepSessionsFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.CountBadQualitySleepSessions;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CountBadQualitySleepSessionsFunctionTest {
+class CountBadQualitySleepSessionsTest {
 
-    private final CountBadQualitySleepSessionsFunction metrics = new CountBadQualitySleepSessionsFunction();
+    private final CountBadQualitySleepSessions metrics = new CountBadQualitySleepSessions();
 
 
     @Test
@@ -29,7 +29,7 @@ class CountBadQualitySleepSessionsFunctionTest {
             )
         );
 
-        assertEquals(0, metrics.getCountBadQualitySleepSessions(sessions));
+        assertEquals(0L, metrics.apply(sessions).value());
     }
 
     @Test
@@ -53,7 +53,7 @@ class CountBadQualitySleepSessionsFunctionTest {
             )
         );
 
-        assertEquals(3, metrics.getCountBadQualitySleepSessions(sessions));
+        assertEquals(3L, metrics.apply(sessions).value());
     }
 
     @Test
@@ -82,6 +82,6 @@ class CountBadQualitySleepSessionsFunctionTest {
             )
         );
 
-        assertEquals(2, metrics.getCountBadQualitySleepSessions(sessions));
+        assertEquals(2L, metrics.apply(sessions).value());
     }
 }

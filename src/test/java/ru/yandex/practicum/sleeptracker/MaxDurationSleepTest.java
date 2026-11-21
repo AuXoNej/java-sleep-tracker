@@ -1,16 +1,16 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.sleeptracker.analyze.function.MaxDurationSleepFunction;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.MaxDurationSleep;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MaxDurationSleepFunctionTest {
+class MaxDurationSleepTest {
 
-    private final MaxDurationSleepFunction metrics = new MaxDurationSleepFunction();
+    private final MaxDurationSleep metrics = new MaxDurationSleep();
 
     @Test
     void getMaxDurationSleep_singleSession_returnsThatSession() {
@@ -22,10 +22,9 @@ class MaxDurationSleepFunctionTest {
             new SleepingSession(start, end, QualitySleep.GOOD)
         );
 
-        var result = metrics.getMaxDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(8 * 60, result.getRight());
-        assertEquals(List.of(start, end), result.getLeft());
+        assertEquals(8 * 60L, result);
     }
 
     @Test
@@ -50,10 +49,9 @@ class MaxDurationSleepFunctionTest {
             )
         );
 
-        var result = metrics.getMaxDurationSleep(sessions);
+        var result = metrics.apply(sessions).value();
 
-        assertEquals(8 * 60 + 5, result.getRight());
-        assertEquals(List.of(start, end),result.getLeft());
+        assertEquals(8 * 60 + 5L, result);
     }
 
 

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.sleeptracker;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,8 +9,7 @@ public class Constants {
     // ========== SleeplessNights ==========
     public static final int HOUR_START_DAY = 12; //startPeriod
 
-    public static final int NIGHT_DURATION_SECONDS = 21600; // 6 часов * 60 минут * 60 секунд
-    public static final int DAY_DURATION_SECONDS = 86400;
+    public static final Duration NIGHT_DURATION = Duration.ofHours(6);
 
     // ========== UserChronotype ==========
     public static final String CHRONOTYPE_OWL = "Сова";
@@ -21,6 +21,8 @@ public class Constants {
 
     public static final LocalTime NIGHT_START_LARK = LocalTime.of(22, 0);
     public static final LocalTime NIGHT_END_LARK = LocalTime.of(7, 0);
+
+    public static final LocalTime DAYTIME_SLEEP_END = LocalTime.of(6, 0);
 
     // ========== SleeplessNights ==========
     public static final DateTimeFormatter FORMATTER_DATE = DateTimeFormatter.ofPattern("dd.MM.yy");

@@ -1,19 +1,26 @@
-package ru.yandex.practicum.sleeptracker.analyze.function;
+package ru.yandex.practicum.sleeptracker.analyzeFunctions;
 
-import ru.yandex.practicum.sleeptracker.Pair;
+import ru.yandex.practicum.sleeptracker.AnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
-import ru.yandex.practicum.sleeptracker.analyze.UserChronotype;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static ru.yandex.practicum.sleeptracker.Constants.*;
 
-public class UserChronotypeFunction implements UserChronotype {
+public class UserChronotype implements Function<List<SleepingSession>, AnalysisResult> {
+
+    private static final String LABEL = "Хронотип пользователя: ";
 
     @Override
-    public String getUserChronotype(List<SleepingSession> sessions) {
+    public AnalysisResult apply(List<SleepingSession> sessions) {
+        return new AnalysisResult(LABEL, getUserChronotype(sessions));
+    }
+
+    private String getUserChronotype(List<SleepingSession> sessions) {
 
         var chronotypes = new HashMap<String, Integer>();
         chronotypes.put(CHRONOTYPE_OWL, 0);
@@ -21,16 +28,22 @@ public class UserChronotypeFunction implements UserChronotype {
         chronotypes.put(CHRONOTYPE_PIGEON, 0);
 
         sessions.stream()
-            .map(s -> new Pair<>(s.getStartSleeping(), s.getEndSleeping()))
+            .filter(s -> {
+                var start = s.getStartSleeping().toLocalTime();
+                return start.isBefore(DAYTIME_SLEEP_END)
+                    || s.getEndSleeping().toLocalTime().isBefore(start);
+            })
+            .map(s ->
+                new AbstractMap.SimpleImmutableEntry<>(s.getStartSleeping(), s.getEndSleeping()))
             .forEach(p -> {
                 if (
-                    p.getLeft().toLocalTime().isAfter(NIGHT_START_OWL)
-                        && p.getRight().toLocalTime().isAfter(NIGHT_END_OWL)
+                    p.getKey().toLocalTime().isAfter(NIGHT_START_OWL)
+                        && p.getValue().toLocalTime().isAfter(NIGHT_END_OWL)
                 ) {
                     chronotypes.merge(CHRONOTYPE_OWL, 1, Integer::sum);
                 } else if (
-                    p.getLeft().toLocalTime().isBefore(NIGHT_START_LARK)
-                        && p.getRight().toLocalTime().isBefore(NIGHT_END_LARK)
+                    p.getKey().toLocalTime().isBefore(NIGHT_START_LARK)
+                        && p.getValue().toLocalTime().isBefore(NIGHT_END_LARK)
                 ) {
                     chronotypes.merge(CHRONOTYPE_LARK, 1, Integer::sum);
                 } else {

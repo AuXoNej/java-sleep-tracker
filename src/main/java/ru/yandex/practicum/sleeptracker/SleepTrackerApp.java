@@ -1,6 +1,6 @@
 package ru.yandex.practicum.sleeptracker;
 
-import ru.yandex.practicum.sleeptracker.analyze.function.*;
+import ru.yandex.practicum.sleeptracker.analyzeFunctions.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,13 +9,13 @@ import java.util.function.Function;
 public class SleepTrackerApp {
 
     private static final List<Function<List<SleepingSession>, AnalysisResult>> ANALYSIS_FUNCTIONS = List.of(
-        new CountSleepingSessionsFunction(),
-        new MinDurationSleepFunction(),
-        new MaxDurationSleepFunction(),
-        new AverageDurationSleepFunction(),
-        new CountBadQualitySleepSessionsFunction(),
-        new SleeplessNightsFunction(),
-        new UserChronotypeFunction()
+        new CountSleepingSessions(),
+        new MinDurationSleep(),
+        new MaxDurationSleep(),
+        new AverageDurationSleep(),
+        new CountBadQualitySleepSessions(),
+        new SleeplessNights(),
+        new UserChronotype()
     );
 
 
